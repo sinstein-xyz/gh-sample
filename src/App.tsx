@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import { components } from '@octokit/openapi-types';
+import axios from 'axios';
+import React, { ChangeEvent, useState } from 'react';
 import './App.css';
+import { RepositoriesListView } from './views/RepositoriesListView';
 
 function App() {
+  const [username, setUsername] = useState("")
+  const [repositories, setRepositories] = useState<components["schemas"]["repository"][]>();
+
+  const onChange = (e: ChangeEvent<HTMLInputElement>)=> {
+    setUsername(e.target.value)
+    setRepositories(undefined)
+  }
+
+  const fetchRepositories = (e: React.SyntheticEvent) => {
+    axios.get<components["schemas"]["repository"][]>(`https://api.github.com/users/${username}/repos`)
+    .then(function (response) {
+        console.log(response);
+        setRepositories(response.data)
+      })
+      .catch(function (error) {
+        console.error(error);
+      })
+
+      e.preventDefault();
+      e.stopPropagation();
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <form onSubmit={fetchRepositories}>
+          <input type="text" placeholder="Enter Github username" value={username} onChange={onChange} />
+          <button type={'submit'}>Fetch Respositories</button>
+        </form>
+        {repositories && <RepositoriesListView key={username} repositories={repositories} username={username}/>}
     </div>
   );
 }
