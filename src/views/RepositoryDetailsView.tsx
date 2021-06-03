@@ -52,7 +52,9 @@ export function RepositoryDetailsView(props: {
     const renderReadMe = () => {
         return <div>
             <h5>README</h5>
+            <div className="readme">
             {readmeContent}
+            </div>
         </div>
     }
 

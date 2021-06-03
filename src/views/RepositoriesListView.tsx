@@ -10,6 +10,7 @@ export function RepositoriesListView(props: {
 
     const [selectedRepository, setSelectedRepository] = useState<components["schemas"]["repository"]>()
     const [selectedRepositoryDetails, setSelectedRepositoryDetails] = useState<components["schemas"]["content-directory"]>()
+    const [message, setMessage] = useState<string>()
 
     useEffect(() => {
         fetchRepositoryDetails()
@@ -28,6 +29,7 @@ export function RepositoriesListView(props: {
       })
       .catch(function (error) {
         console.error(error);
+        setMessage(error.message);
       })
     }
 
@@ -43,7 +45,7 @@ export function RepositoriesListView(props: {
         <div className="repositories">
             <div className="repositories-list" key={props.username}>
                 <h4>Found {props.repositories.length} repositories by {props.username}</h4>
-
+                {message && <p className='message'>{message}</p>}
                 <ol>
                     {repositoriesView()}
                 </ol>

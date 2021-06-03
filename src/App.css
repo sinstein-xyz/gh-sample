@@ -36,6 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+.message {
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  background-color: tomato;
+  border: 1px solid tomato;
+}
+
 .repositories {
   margin-top: 10px;
 }
@@ -57,4 +67,10 @@
   display: inline-block;
   vertical-align: top;
   border: 1px solid #ddd;
+}
+
+.readme {
+  border: 1px solid #ddd;
+  margin: 5px;
+  padding: 5px;
 }
