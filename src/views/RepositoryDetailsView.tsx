@@ -28,13 +28,12 @@ export function RepositoryDetailsView(props: {
 
     const [readmeContent, setReadmeContents] = useState("No README found")
 
-
     useEffect(() => {
         findReadMe()
     })
 
     const findReadMe = () => {
-        let readmeFile = props.details.find((file: contentFileType) => file.name == 'README.md')
+        let readmeFile = props.details.find((file: contentFileType) => file.name.toLowerCase() == 'readme.md')
 
         if(readmeFile) {
             axios.get<components["schemas"]["content-file"]>(readmeFile?.url)
@@ -52,7 +51,7 @@ export function RepositoryDetailsView(props: {
     const renderReadMe = () => {
         return <div>
             <h5>README</h5>
-            <div className="readme">
+            <div className="readme" data-testid="readme-content">
             {readmeContent}
             </div>
         </div>
@@ -61,9 +60,9 @@ export function RepositoryDetailsView(props: {
     return (
         <div className="repository-details">
             <h4>Details for {props.name}</h4>
-            <ul>
+            <ul data-testid="file-list">
                 {props.details?.map((file: contentFileType) => {
-                    return <li>
+                    return <li key={file.name}>
                         {file.name}
                     </li>
                 })}

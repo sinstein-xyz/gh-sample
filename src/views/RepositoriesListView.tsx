@@ -16,7 +16,7 @@ export function RepositoriesListView(props: {
         fetchRepositoryDetails()
     }, [selectedRepository])
 
-    const showRepository = (repository: components["schemas"]["repository"]) => {
+    const onRepositorySelect = (repository: components["schemas"]["repository"]) => {
         setSelectedRepository(repository)
     }
 
@@ -36,7 +36,7 @@ export function RepositoriesListView(props: {
     const repositoriesView = () => {
         return props.repositories.map((repo: components["schemas"]["repository"]) => {
             return <li key={repo.name}>
-                <a href={`#${repo.name}`} onClick={(_: React.SyntheticEvent) => {showRepository(repo)}}>{repo.name}</a>
+                <a href={`#${repo.name}`} onClick={(_: React.SyntheticEvent) => {onRepositorySelect(repo)}}>{repo.name}</a>
                 </li>
             })
     }
@@ -44,7 +44,7 @@ export function RepositoriesListView(props: {
     return (
         <div className="repositories">
             <div className="repositories-list" key={props.username}>
-                <h4>Found {props.repositories.length} repositories by {props.username}</h4>
+                <h4 data-testid='user-repository-summary'>Found {props.repositories.length} repositories by {props.username}</h4>
                 {message && <p className='message'>{message}</p>}
                 <ol>
                     {repositoriesView()}
