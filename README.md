@@ -5,6 +5,18 @@ A TS + React project that will fetch the public repositories for a given Github 
 ![Screenshot (30)](https://user-images.githubusercontent.com/4283218/120700005-be4daa00-c4ce-11eb-9f0a-5347e1707a88.png)
   </kbd>
 
+
+## Architecture
+The application consists of 3 components in order of activation:
+1. `UserInputView` - takes username input and fetches repository list from Github
+2. `RepositoriesListView` - takes repository list from `UserInputView` and renders them as a list. Fetches repository details on the basis of user selection
+3. `RepositoryDetailsView` - takes the detailed repository details of the user selection from `RepositoriesListView` and render the file list and the contents of the Readme file if present
+
+![annotated_architecture](https://user-images.githubusercontent.com/4283218/120705723-cf4de980-c4d5-11eb-8b80-36ea415e8fcd.png)
+
+
+This leverages the [Typescript definition of GitHub's OpenAPI specification](https://github.com/octokit/openapi-types.ts) to parse data from the Github API
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
